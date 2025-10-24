@@ -60,11 +60,15 @@ bool hash_based_compare(const char *attempt) {
   uint8_t attempt_hash[32];
   
   hashPassword(attempt, SALT, sizeof(SALT), attempt_hash);
+
+  delayMicroseconds(random(50, 200));  // Random wait before
   
   volatile uint8_t result = 0;
   for (size_t i = 0; i < 32; i++) {
     result |= (attempt_hash[i] ^ PASSWORD_HASH[i]);
   }
+
+  delayMicroseconds(random(50, 200));  // Random wait after
   
   return (result == 0);
 }
